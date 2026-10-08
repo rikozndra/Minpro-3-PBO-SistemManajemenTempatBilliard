@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.miniproject2_pbo.model;
+package com.mycompany.miniproject3_pbo.model;
 
 /**
  *
  * @author user
  */
-public abstract class MejaBilliard {
+public abstract class MejaBilliard implements DapatDisewa {
+
     private int nomorMeja;
     private double hargaPerJam;
     private String status;
@@ -23,16 +24,8 @@ public abstract class MejaBilliard {
         return nomorMeja;
     }
 
-    public void setNomorMeja(int nomorMeja) {
-        this.nomorMeja = nomorMeja;
-    }
-
     public double getHargaPerJam() {
         return hargaPerJam;
-    }
-
-    public void setHargaPerJam(double hargaPerJam) {
-        this.hargaPerJam = hargaPerJam;
     }
 
     public String getStatus() {
@@ -43,7 +36,37 @@ public abstract class MejaBilliard {
         this.status = status;
     }
 
+    // IMPLEMENTASI INTERFACE
+    @Override
+    public double getHargaSewa() {
+        return hargaPerJam;
+    }
+
+    @Override
+    public boolean dapatDisewa() {
+        return status.equals("Tersedia");
+    }
+
+    // ABSTRACT METHOD
     public abstract String getJenisMeja();
 
-    public abstract double hitungBiaya(int durasiJam);
+    // OVERLOADING 1
+    public double hitungBiaya(int durasiJam) {
+        return hargaPerJam * durasiJam;
+    }
+
+    // OVERLOADING 2
+    public double hitungBiaya(int durasiJam, double diskonPersen) {
+
+        double totalAwal = hitungBiaya(durasiJam);
+
+        if (diskonPersen < 0 || diskonPersen > 100) {
+            return totalAwal;
+        }
+
+        double potongan =
+                totalAwal * diskonPersen / 100;
+
+        return totalAwal - potongan;
+    }
 }

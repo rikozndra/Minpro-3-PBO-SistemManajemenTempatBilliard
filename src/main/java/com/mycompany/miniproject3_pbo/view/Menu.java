@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.miniproject2_pbo.view;
+package com.mycompany.miniproject3_pbo.view;
 
-import com.mycompany.miniproject2_pbo.controller.BilliardController;
-import com.mycompany.miniproject2_pbo.model.Transaksi;
+import com.mycompany.miniproject3_pbo.controller.BilliardController;
+import com.mycompany.miniproject3_pbo.model.Transaksi;
 import java.util.Scanner;
 
 /**
@@ -13,6 +13,7 @@ import java.util.Scanner;
  * @author user
  */
 public class Menu {
+
     private Scanner input;
     private BilliardController controller;
 
@@ -27,7 +28,9 @@ public class Menu {
 
         do {
             System.out.println("\n==============================");
-            System.out.println("   SISTEM MANAJEMEN BILLIARD");
+            System.out.println(
+                    "   SISTEM MANAJEMEN BILLIARD"
+            );
             System.out.println("==============================");
             System.out.println("1. Tambah Meja");
             System.out.println("2. Tampilkan Data Meja");
@@ -36,7 +39,8 @@ public class Menu {
             System.out.println("5. Buka Meja");
             System.out.println("6. Tambah Waktu");
             System.out.println("7. Tutup Meja");
-            System.out.println("8. Keluar");
+            System.out.println("8. Riwayat Transaksi");
+            System.out.println("9. Keluar");
             System.out.println("==============================");
 
             pilihan = bacaAngka("Pilih menu: ");
@@ -72,32 +76,47 @@ public class Menu {
                     break;
 
                 case 8:
-                    System.out.println("Program selesai.");
+                    controller.tampilkanRiwayatTransaksi();
+                    break;
+
+                case 9:
+                    System.out.println(
+                            "Program selesai."
+                    );
                     break;
 
                 default:
-                    System.out.println("Pilihan menu tidak tersedia.");
+                    System.out.println(
+                            "Pilihan menu tidak tersedia."
+                    );
             }
 
-        } while (pilihan != 8);
+        } while (pilihan != 9);
     }
 
     private void tambahMeja() {
 
         System.out.println("\n--- TAMBAH MEJA ---");
 
-        int nomorMeja = bacaAngkaPositif("Nomor meja: ");
+        int nomorMeja =
+                bacaAngkaPositif("Nomor meja: ");
 
         String jenisMeja = bacaJenisMeja();
 
-        boolean berhasil = controller.tambahMeja(
-                nomorMeja,
-                jenisMeja
-        );
+        boolean berhasil =
+                controller.tambahMeja(
+                        nomorMeja,
+                        jenisMeja
+                );
 
         if (berhasil) {
-            System.out.println("Meja berhasil ditambahkan.");
+
+            System.out.println(
+                    "Meja berhasil ditambahkan."
+            );
+
         } else {
+
             System.out.println(
                     "Gagal menambahkan meja. "
                     + "Nomor mungkin sudah digunakan."
@@ -107,22 +126,31 @@ public class Menu {
 
     private void ubahMeja() {
 
-        System.out.println("\n--- UBAH DATA MEJA ---");
-
-        int nomorMeja = bacaAngkaPositif(
-                "Nomor meja yang ingin diubah: "
+        System.out.println(
+                "\n--- UBAH DATA MEJA ---"
         );
+
+        int nomorMeja =
+                bacaAngkaPositif(
+                        "Nomor meja yang ingin diubah: "
+                );
 
         String jenisBaru = bacaJenisMeja();
 
-        boolean berhasil = controller.ubahMeja(
-                nomorMeja,
-                jenisBaru
-        );
+        boolean berhasil =
+                controller.ubahMeja(
+                        nomorMeja,
+                        jenisBaru
+                );
 
         if (berhasil) {
-            System.out.println("Data meja berhasil diubah.");
+
+            System.out.println(
+                    "Data meja berhasil diubah."
+            );
+
         } else {
+
             System.out.println(
                     "Gagal mengubah data. "
                     + "Meja tidak ditemukan atau sedang digunakan."
@@ -132,17 +160,26 @@ public class Menu {
 
     private void hapusMeja() {
 
-        System.out.println("\n--- HAPUS MEJA ---");
-
-        int nomorMeja = bacaAngkaPositif(
-                "Nomor meja yang ingin dihapus: "
+        System.out.println(
+                "\n--- HAPUS MEJA ---"
         );
 
-        boolean berhasil = controller.hapusMeja(nomorMeja);
+        int nomorMeja =
+                bacaAngkaPositif(
+                        "Nomor meja yang ingin dihapus: "
+                );
+
+        boolean berhasil =
+                controller.hapusMeja(nomorMeja);
 
         if (berhasil) {
-            System.out.println("Meja berhasil dihapus.");
+
+            System.out.println(
+                    "Meja berhasil dihapus."
+            );
+
         } else {
+
             System.out.println(
                     "Meja tidak ditemukan atau sedang digunakan."
             );
@@ -151,17 +188,37 @@ public class Menu {
 
     private void bukaMeja() {
 
-        System.out.println("\n--- BUKA MEJA ---");
+        System.out.println(
+                "\n--- BUKA MEJA ---"
+        );
 
-        int nomorMeja = bacaAngkaPositif("Nomor meja: ");
+        int nomorMeja =
+                bacaAngkaPositif("Nomor meja: ");
+
+        // Cek meja terlebih dahulu
+        if (!controller.mejaBisaDibuka(nomorMeja)) {
+
+            System.out.println(
+                    "Gagal membuka meja. "
+                    + "Periksa nomor, durasi, atau status meja."
+            );
+
+            return;
+        }
 
         String namaPelanggan;
 
         do {
-            System.out.print("Nama pelanggan: ");
-            namaPelanggan = input.nextLine().trim();
+
+            System.out.print(
+                    "Nama pelanggan: "
+            );
+
+            namaPelanggan =
+                    input.nextLine().trim();
 
             if (namaPelanggan.isEmpty()) {
+
                 System.out.println(
                         "Nama pelanggan tidak boleh kosong."
                 );
@@ -169,19 +226,26 @@ public class Menu {
 
         } while (namaPelanggan.isEmpty());
 
-        int durasiJam = bacaAngkaPositif(
-                "Durasi awal (jam): "
-        );
+        int durasiJam =
+                bacaAngkaPositif(
+                        "Durasi awal (jam): "
+                );
 
-        boolean berhasil = controller.bukaMeja(
-                nomorMeja,
-                namaPelanggan,
-                durasiJam
-        );
+        boolean berhasil =
+                controller.bukaMeja(
+                        nomorMeja,
+                        namaPelanggan,
+                        durasiJam
+                );
 
         if (berhasil) {
-            System.out.println("Meja berhasil dibuka.");
+
+            System.out.println(
+                    "Meja berhasil dibuka."
+            );
+
         } else {
+
             System.out.println(
                     "Gagal membuka meja. "
                     + "Periksa nomor, durasi, atau status meja."
@@ -191,22 +255,34 @@ public class Menu {
 
     private void tambahWaktu() {
 
-        System.out.println("\n--- TAMBAH WAKTU ---");
-
-        int nomorMeja = bacaAngkaPositif("Nomor meja: ");
-
-        int tambahanJam = bacaAngkaPositif(
-                "Tambahan waktu (jam): "
+        System.out.println(
+                "\n--- TAMBAH WAKTU ---"
         );
 
-        boolean berhasil = controller.tambahWaktu(
-                nomorMeja,
-                tambahanJam
-        );
+        int nomorMeja =
+                bacaAngkaPositif(
+                        "Nomor meja: "
+                );
+
+        int tambahanJam =
+                bacaAngkaPositif(
+                        "Tambahan waktu (jam): "
+                );
+
+        boolean berhasil =
+                controller.tambahWaktu(
+                        nomorMeja,
+                        tambahanJam
+                );
 
         if (berhasil) {
-            System.out.println("Waktu berhasil ditambahkan.");
+
+            System.out.println(
+                    "Waktu berhasil ditambahkan."
+            );
+
         } else {
+
             System.out.println(
                     "Gagal menambahkan waktu. "
                     + "Pastikan meja sedang digunakan."
@@ -216,15 +292,23 @@ public class Menu {
 
     private void tutupMeja() {
 
-        System.out.println("\n--- TUTUP MEJA ---");
+        System.out.println(
+                "\n--- TUTUP MEJA ---"
+        );
 
-        int nomorMeja = bacaAngkaPositif("Nomor meja: ");
+        int nomorMeja =
+                bacaAngkaPositif(
+                        "Nomor meja: "
+                );
 
-        Transaksi transaksi = controller.tutupMeja(nomorMeja);
+        Transaksi transaksi =
+                controller.tutupMeja(nomorMeja);
 
         if (transaksi != null) {
 
-            System.out.println("\n====== STRUK PEMBAYARAN ======");
+            System.out.println(
+                    "\n====== STRUK PEMBAYARAN ======"
+            );
 
             System.out.println(
                     "Nama Pelanggan : "
@@ -247,13 +331,24 @@ public class Menu {
                     + transaksi.getTotalBayar()
             );
 
-            System.out.println("===============================");
-            System.out.println("Meja berhasil ditutup.");
+            System.out.println(
+                    "Status         : "
+                    + transaksi.getStatusTransaksi()
+            );
+
+            System.out.println(
+                    "==============================="
+            );
+
+            System.out.println(
+                    "Meja berhasil ditutup."
+            );
 
         } else {
 
             System.out.println(
-                    "Meja tidak ditemukan atau tidak sedang digunakan."
+                    "Meja tidak ditemukan atau "
+                    + "tidak sedang digunakan."
             );
         }
     }
@@ -263,8 +358,13 @@ public class Menu {
         String jenisMeja;
 
         do {
-            System.out.print("Jenis meja (Reguler/VIP): ");
-            jenisMeja = input.nextLine().trim();
+
+            System.out.print(
+                    "Jenis meja (Reguler/VIP): "
+            );
+
+            jenisMeja =
+                    input.nextLine().trim();
 
             if (!jenisMeja.equalsIgnoreCase("Reguler")
                     && !jenisMeja.equalsIgnoreCase("VIP")) {
@@ -286,16 +386,20 @@ public class Menu {
 
             System.out.print(pesan);
 
-            String teks = input.nextLine().trim();
+            String teks =
+                    input.nextLine().trim();
 
             try {
 
-                int angka = Integer.parseInt(teks);
+                int angka =
+                        Integer.parseInt(teks);
 
                 if (angka < 0) {
+
                     System.out.println(
                             "Input tidak boleh negatif."
                     );
+
                     continue;
                 }
 
@@ -316,16 +420,20 @@ public class Menu {
 
             System.out.print(pesan);
 
-            String teks = input.nextLine().trim();
+            String teks =
+                    input.nextLine().trim();
 
             try {
 
-                int angka = Integer.parseInt(teks);
+                int angka =
+                        Integer.parseInt(teks);
 
                 if (angka <= 0) {
+
                     System.out.println(
                             "Input harus lebih dari 0."
                     );
+
                     continue;
                 }
 

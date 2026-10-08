@@ -2,19 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.miniproject2_pbo.model;
+package com.mycompany.miniproject3_pbo.model;
 
 /**
  *
  * @author user
  */
 public class Transaksi {
-    
+
     private int idTransaksi;
     private int nomorMeja;
     private String namaPelanggan;
     private int durasiJam;
     private double totalBayar;
+    private String statusTransaksi;
 
     public Transaksi(int idTransaksi, int nomorMeja,
             String namaPelanggan, int durasiJam,
@@ -25,6 +26,7 @@ public class Transaksi {
         this.namaPelanggan = namaPelanggan;
         this.durasiJam = durasiJam;
         this.totalBayar = totalBayar;
+        this.statusTransaksi = "Aktif";
     }
 
     public int getIdTransaksi() {
@@ -47,11 +49,19 @@ public class Transaksi {
         return totalBayar;
     }
 
+    public String getStatusTransaksi() {
+        return statusTransaksi;
+    }
+
     public void setDurasiJam(int durasiJam) {
         this.durasiJam = durasiJam;
     }
 
     public void setTotalBayar(double totalBayar) {
         this.totalBayar = totalBayar;
+    }
+
+    public void setStatusTransaksi(String statusTransaksi) {
+        this.statusTransaksi = statusTransaksi;
     }
 }
